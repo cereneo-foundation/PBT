@@ -39,7 +39,7 @@ def main():
             # get belt speed
             subject = utils.extract_subject(acq_trial)
             if subject.subject in speeds.index.values:
-                belt_speed = speeds.loc[subject.subject]
+                belt_speed = speeds.loc[subject.subject]["speed"]
 
                 # Margin of stability left cycles
                 left_cmos_modeller = modelling.CMoSModeller("Left", configs, subject.left_leg_length, belt_speed)
