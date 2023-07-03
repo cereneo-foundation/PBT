@@ -34,7 +34,5 @@ def main():
             results.to_csv("out/nice.csv")
 
 
-# Using the special variable
-# __name__
 if __name__ == "__main__":
     main()
