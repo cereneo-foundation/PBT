@@ -159,3 +159,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 /data/part_meta/
+/data/out/nice.csv
+/data/events_cleaned/
+/data/
+/prepared_data/
