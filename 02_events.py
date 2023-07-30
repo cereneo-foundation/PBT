@@ -10,7 +10,7 @@ from gaitalytics import utils, api
 # Define paths
 SETTINGS_FILE = "settings/hbm_pig.yaml"
 #DATA_PATH = "//192.168.102.50/studyRepository/PBT/vicon"
-DATA_PATH = "C:\\ViconData\\PBT\\Test_1\\"
+DATA_PATH = "./data/events"
 
 def main():
     configs = utils.ConfigProvider(SETTINGS_FILE)
@@ -19,8 +19,9 @@ def main():
         filtered_files = list(filter(r.match, file_name))
         for filtered_file in filtered_files:
             file_path = f"{root}/{filtered_file}"
-            print(file_path)
-            api.detect_gait_events(file_path, root, configs)
+            if not os.path.isfile(f"{root}/{filtered_file.replace('.3.c3d', '.4.c3d')}"):
+                print(file_path)
+                api.detect_gait_events(file_path, root, configs, min_distance=50)
 
 
 

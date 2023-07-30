@@ -8,8 +8,8 @@ from gaitalytics import api, utils
 
 # Define paths
 SETTINGS_FILE = "settings/hbm_pig.yaml"
-DATA_PATH = "//192.168.102.50/studyRepository/PBT/vicon"
-BUFFER_PATH = "//192.168.102.50/studyRepository/PBT/analysis/buffer"
+DATA_PATH = "./data/to_analyse"
+BUFFER_PATH = "./data/buffer"
 
 
 def main():
@@ -25,13 +25,13 @@ def main():
             # read c3d
             if not os.path.exists(cycle_path):
                 os.mkdir(cycle_path)
-                cycle_data = api.extract_cycles(f"{root}/{filtered_file}", configs, buffer_output_path=cycle_path)
+                cycle_data = api.extract_cycles(f"{root}/{filtered_file}", configs, buffer_output_path=cycle_path,
+                                                anomaly_checker=[api.GAIT_EVENT_CHECKER_CONTEXT])
             else:
                 cycle_data = api.extract_cycles_buffered(cycle_path, configs).get_raw_cycle_points()
 
-            results = api.analyse_data(cycle_data, configs,
-                                       mehtode=[api.ANALYSIS_SPATIO_TEMP, api.ANALYSIS_TOE_CLEARANCE])
-            results.to_csv("out/nice.csv")
+            api.normalise_cycles(f"{root}/{filtered_file}", cycle_data, buffer_output_path=cycle_path)
+
 
 
 if __name__ == "__main__":
